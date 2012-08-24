@@ -25,7 +25,7 @@ To fix this problem, I [committed a change](https://github.com/Khan/khan-exercis
 
 ## New incentives for discussion participation
 
-My first real people-helping-people--related project was to create new incentives for participation in discussion. I added several new badges, including two new instances of our heavily-coveted sun badges:
+My first real PHP-related project was to create new incentives for participation in discussion. I added several new badges, including two new instances of our heavily-coveted sun badges:
 
 <img src="/images/2012-08-24/badges.png" width="560" height="110">
 
