@@ -5,11 +5,11 @@ title: What I did at Khan Academy, 2012 edition
 
 This week marks the end of my second summer working at [Khan Academy](http://www.khanacademy.org/). Inspired by [David Hu's internship post-mortem](http://david-hu.com/2012/01/05/khan-academy-internship-post-mortem.html) and [Jamie Wong's end-of-summer braindump](http://jamie-wong.com/2012/08/22/what-i-did-at-khan-academy/), here's a summary of what I worked on this summer.
 
-This summer I worked mainly on the our "people helping people" team (abbreviated PHP, of course) on improving the community and encouraging discussion around the content on our site, with an emphasis on Q&A.
+This summer I worked mainly on our "people helping people" team (abbreviated PHP, of course) on improving the community and encouraging discussion around the content on our site, with an emphasis on Q&A.
 
 ## iPad app
 
-Before starting on my main work for the summer, I had to get out a few bug fixes for our iPad app ([iTunes link](http://itunes.apple.com/us/app/khan-academy/id469863705?mt=8)), which we [launched](http://www.khanacademy.org/about/blog/post/24905749288/ipad-app) earlier this year.
+Before starting on my main work for the summer, I had to get out a few bug fixes for our iPad app ([iTunes link](http://itunes.apple.com/us/app/khan-academy/id469863705?mt=8)), which we [launched earlier this year](http://www.khanacademy.org/about/blog/post/24905749288/ipad-app).
 
 In particular, Facebook deprecated the [offline_access OAuth permission](http://developers.facebook.com/roadmap/offline-access-removal/) that we were using when users log in to Khan Academy with a Facebook account, so after making the appropriate server-side changes to ensure nothing would break, I needed to go through all of the app code to make sure that a 401 Unauthorized response from our API would always be handled appropriately.
 
@@ -71,7 +71,7 @@ The calculator uses a [Jison](http://zaach.github.com/jison/) parser -- in the f
 
 My largest project this summer was the creation of per-topic discussion pages -- previously, if you wanted to answer community questions about (for example) algebra, you'd need to go to each algebra video and look for unanswered questions.
 
-I worked on integrating discussions into our topic pages -- now it's much easier to find questions to answer as well as learn from the answers of others. In addition to being able to answer without leaving the page, you can click on the name of a video to bring up a modal player with that video.
+Now it's much easier to find questions to answer as well as learn from the answers of others. In addition to being able to answer without leaving the page, you can click on the name of a video to bring up a modal player with that video.
 
 <a href="http://www.khanacademy.org/cs/d"><img src="/images/2012-08-24/cs-d.png" width="560" height="200"></a>
 
@@ -79,7 +79,7 @@ Thanks to Jamie Wong's great work, discussions are available for the new interac
 
 ## Miscellanea
 
-Though they aren't big enough to deserve their own sections, I made speed improvements and bug fixes to many components including exercises, the deploy script, the homepage, the blog, the OAuth login flow for API clients, and our A/B testing framework.
+Though they aren't big enough to deserve their own sections in this post, I made speed improvements and bug fixes to many components including exercises, the deploy script, the homepage, the blog, the OAuth login flow for API clients, and our A/B testing framework.
 
 I also gave a tech talk about [CSS](http://www.w3.org/Style/CSS/Overview.en.html) -- I focused on the basics of the box model and how to create simple layouts using CSS. They probably won't be very useful without audio or the demo that took up most of the time, but I've [posted the slides](https://speakerdeck.com/u/spicyj/p/css) anyway.
 
@@ -91,4 +91,4 @@ I also organized a couple of team events, including our second-ever [FIXIT day](
 
 ## Conclusion
 
-Khan Academy is a phenomenal place to work -- we have plenty of interesting problems to work on and countless amazing team members to tackle them with. I'm really glad that I returned for a second summer, and I'd encourage anyone interested to [apply for a job](http://www.khanacademy.org/careers) -- we're hiring both full-timers and interns year-round.
+Khan Academy is a phenomenal place to work -- we have plenty of interesting problems to work on and amazing team members to tackle them with. I'm really glad that I returned for a second summer, and I'd encourage anyone interested to [apply for a job](http://www.khanacademy.org/careers) -- we're hiring both full-timers and interns year-round.
