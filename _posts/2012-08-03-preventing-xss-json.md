@@ -37,14 +37,18 @@ So what's the fix? In addition to the common character escapes `\"`, `\\`, `\b`,
 
 Regardless of which language you use, you'll probably want to make a helper function to encapsulate this logic:
 
-    # Ruby
-    def jsonify(obj)
-      obj.to_json.gsub('</', '<\/')
-    end
+{% highlight ruby %}
+# Ruby
+def jsonify(obj)
+  obj.to_json.gsub('</', '<\/')
+end
+{% endhighlight %}
 
-    # Python
-    def jsonify(obj):
-        return json.dumps(obj).replace('</', '<\\/')
+{% highlight python %}
+# Python
+def jsonify(obj):
+    return json.dumps(obj).replace('</', '<\\/')
+{% endhighlight %}
 
 As long as you always remember to use the `jsonify` wrapper instead of the built-in JSON serialization, you should be safe from this particular attack.
 

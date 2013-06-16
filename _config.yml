@@ -1,1 +1,2 @@
 exclude: ["Makefile"]
+pygments: true
