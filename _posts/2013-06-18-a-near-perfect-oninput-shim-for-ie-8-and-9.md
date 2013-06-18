@@ -3,7 +3,7 @@ layout: post
 title: A near-perfect oninput shim for IE 8 and 9
 ---
 
-I recently began using [React](http://facebook.github.io/react/), which, like many libraries, has a events system designed so event properties can be normalized between browsers and custom events can be created. I contributed an synthetic event called [textchange](https://github.com/facebook/react/pull/75) which is essentially a cross-browser shim for the input event (which is natively supported in modern browsers but not in older versions of IE).
+I recently began using [React](http://facebook.github.io/react/), which, like many libraries, has an events system designed so event properties can be normalized between browsers and custom events can be created. I contributed a synthetic event called [textchange](https://github.com/facebook/react/pull/75) which is essentially a cross-browser shim for the input event (which is natively supported in modern browsers but not in older versions of IE).
 
 ## Understanding the input event
 
