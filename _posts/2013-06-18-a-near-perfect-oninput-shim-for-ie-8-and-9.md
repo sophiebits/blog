@@ -5,6 +5,8 @@ title: A near-perfect oninput shim for IE 8 and 9
 
 I recently began using [React](http://facebook.github.io/react/), which, like many libraries, has an events system designed so event properties can be normalized between browsers and custom events can be created. I contributed a synthetic event called [textchange](https://github.com/facebook/react/pull/75) which is essentially a cross-browser shim for the input event (which is natively supported in modern browsers but not in older versions of IE).
 
+In this post I'll explain how the input event works and how I'm simulating it in IE 8 and 9. I'll also point you to a jQuery plugin I made so you can take advantage of my textchange event regardless of whether you're using React yet or not.
+
 ## Understanding the input event
 
 First off, what is the [input](https://developer.mozilla.org/en-US/docs/Web/Reference/Events/input) event? If you have an `<input>` element and want to receive events whenever the value changes, the most obvious thing to do is to listen to the change event. Unfortunately, change fires only after the text field is defocused, rather than on each keystroke. The next obvious choice is the keyup event, which is triggered whenever a key is released. Unfortunately, keyup doesn't catch input that doesn't involve the keyboard (e.g., pasting from the clipboard using the mouse) and only fires once if a key is held down, rather than once per inserted character.
