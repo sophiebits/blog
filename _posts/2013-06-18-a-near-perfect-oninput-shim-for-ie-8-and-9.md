@@ -17,7 +17,7 @@ The input event was created to solve all of these problems. It fires immediately
 
 ## Simulating the input event in IE 8
 
-Let's see how to simulate the input event in IE 8. Conveniently, IE supports a proprietary event called [propertychange](http://msdn.microsoft.com/en-us/library/ie/ms536956%28v=vs.85%29.aspx) which fires whenever the any property of an element changes, including `value`. Thus, you can get 80% of the way there by doing:
+Let's see how to simulate the input event in IE 8. Conveniently, IE supports a proprietary event called [propertychange](http://msdn.microsoft.com/en-us/library/ie/ms536956%28v=vs.85%29.aspx) which fires whenever any property of an element changes, including `value`. Thus, you can get 80% of the way there by doing:
 
 {% highlight javascript %}
 el.attachEvent("onpropertychange", function(e) {
