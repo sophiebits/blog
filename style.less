@@ -1,7 +1,9 @@
 @import "_normalize";
 
-/* http://www.colourlovers.com/palette/2283896/Persian_Gulf */
-@dark-purple: #4c486c;
+@green1: #badb9a;
+@green2: #7bc681;
+@purple: #c0247e;
+@orange: #e8553a;
 
 html, body {
     height: 100%;
@@ -25,10 +27,11 @@ body {
 }
 
 .header {
-    background: #f0dcc0;
+    background: @green1;
+    border-bottom: 3px solid @green2;
     font-size: 1.3em;
     margin: 0 0 1em;
-    padding: 1.2em 0;
+    padding: 1em 0;
 
     /*
     .nav {
@@ -52,7 +55,7 @@ body {
         display: block;
 
         a:link, a:visited {
-            color: #222;
+            color: #333;
             text-decoration: none;
         }
     }
@@ -64,18 +67,23 @@ body {
 }
 
 .footer {
-    background: @dark-purple;
-    color: #fdfdfd;
-    height: 2.5em;
+    color: #333;
     margin-top: 3em;
-    padding: 1em 0 0;
+
+    .container {
+        border-top: 2px solid @green2;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 4em;
+        padding: 1.25em 0 0;
+    }
 
     .right {
         float: right;
     }
 
     a:link, a:visited {
-        color: #fff;
+        color: #000;
     }
 }
 
@@ -101,12 +109,16 @@ pre > code {
     padding: 0;
 }
 
-a {
-    color: #04c;
+a:link {
+    color: darken(@green2, 25%);
 }
 
 a:visited {
-    color: #639;
+    color: darken(@purple, 10%);
+}
+
+a:active {
+    color: @orange;
 }
 
 img, a img {
