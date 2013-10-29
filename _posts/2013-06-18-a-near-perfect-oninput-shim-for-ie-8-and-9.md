@@ -3,7 +3,7 @@ layout: post
 title: A near-perfect oninput shim for IE 8 and 9
 ---
 
-I recently began using [React](http://facebook.github.io/react/), which, like many libraries, has an events system designed so event properties can be normalized between browsers and custom events can be created. I contributed a synthetic event called [textchange](https://github.com/facebook/react/pull/75) which is essentially a cross-browser shim for the input event (which is natively supported in modern browsers but not in older versions of IE).
+I recently began using [React](http://facebook.github.io/react/), which, like many libraries, has an events system designed so event properties can be normalized between browsers and custom events can be created. I [contributed](https://github.com/facebook/react/pull/75) a synthetic event called [onChange](http://facebook.github.io/react/docs/forms.html) which is essentially a cross-browser shim for the input event (which is natively supported in modern browsers but not in older versions of IE).
 
 In this post I'll explain how the input event works and how I'm simulating it in IE 8 and 9. I'll also point you to a jQuery plugin I made so you can take advantage of my textchange event regardless of whether you're using React yet or not.
 
@@ -100,4 +100,4 @@ Fortunately, the IE developers were merciful and decided to fire the selectionch
 
 It's amazing how many cross-browser quirks there are to deal with, but if we combine all of these techniques together, we can finally create an event that works consistently across all browsers. If anyone knows how to improve any of the solutions laid out in this post, please let me know.
 
-If you're using React, there's no plugin needed; simply use `onTextChange={...}` and you're done. If you're not using React yet, I've created a jQuery plugin, [jquery.splendid.textchange.js](https://github.com/spicyj/jquery-splendid-textchange), that abstracts away cross-browser differences and dispatches textchange events via jQuery that behave almost identically in IE 8, IE9, and modern browsers.
+If you're using React, there's no plugin needed; simply use [`onChange={...}`](http://facebook.github.io/react/docs/forms.html) and you're done. If you're not using React yet, I've created a jQuery plugin, [jquery.splendid.textchange.js](https://github.com/spicyj/jquery-splendid-textchange), that abstracts away cross-browser differences and dispatches textchange events via jQuery that behave almost identically in IE 8, IE9, and modern browsers.
