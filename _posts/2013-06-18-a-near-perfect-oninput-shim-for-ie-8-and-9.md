@@ -29,7 +29,7 @@ el.attachEvent("onpropertychange", function(e) {
 
 However, we don't want to fire the textchange event if the value has been changed from JavaScript code because such a notification is inconsistent with how the input event works (and almost always unhelpful). In addition, the propertychange event doesn't bubble like most events do, so you have to bind to each input whose value you want to track (rather than binding on `document` and relying on [event delegation](http://davidwalsh.name/event-delegate)).
 
-IE 8 allows you to use `Object.defineProperty` on DOM elements, so to ignore `value` changes caused by JavaScript, we can override the property setter for `value` to intercept the change and silence our event. To avoid the overhead of listening to propertychange, we can listen to the focus and blur events and only listen to changes on the currently-focused element. Now our shim looks something like this:
+IE 8 allows you to use `Object.defineProperty` on DOM elements, so to ignore `value` changes caused by JavaScript, we can override the property setter for `value` to intercept the change and silence our event. To avoid the overhead of listening to propertychange, we can listen to the focus and blur events and only listen to changes on the currently focused element. Now our shim looks something like this:
 
 {% highlight javascript %}
 var activeElement = null;
