@@ -1,2 +1,2 @@
 exclude: ["Makefile"]
-pygments: true
+highlighter: pygments
