@@ -4,22 +4,22 @@ layout: null
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <title>Ben Alpert</title>
-    <link href="http://benalpert.com/atom.xml" rel="self"/>
-    <link href="http://benalpert.com/"/>
+    <title>Sophie Alpert</title>
+    <link href="http://sophiebits.com/atom.xml" rel="self"/>
+    <link href="http://sophiebits.com/"/>
     <updated>{{ site.time | date_to_xmlschema }}</updated>
-    <id>http://benalpert.com/</id>
+    <id>http://sophiebits.com/</id>
     <author>
-        <name>Ben Alpert</name>
-        <email>ben@benalpert.com</email>
+        <name>Sophie Alpert</name>
+        <email>hi@sophiebits.com</email>
     </author>
 
     {% for post in site.posts %}
         <entry>
             <title>{{ post.title }}</title>
-            <link href="http://benalpert.com{{ post.url }}"/>
+            <link href="http://sophiebits.com{{ post.url }}"/>
             <updated>{{ post.date | date_to_xmlschema }}</updated>
-            <id>http://benalpert.com{{ post.id }}</id>
+            <id>http://sophiebits.com{{ post.id }}</id>
             <content type="html">{{ post.content | xml_escape }}</content>
         </entry>
     {% endfor %}
