@@ -11,12 +11,13 @@
 <link rel="icon" href="/favicon.ico">
 {% if page.og_image %}
 <meta property="og:image" content="https://sophiebits.com{{page.og_image}}">
+<meta property="twitter:image" content="https://sophiebits.com{{page.og_image}}">
+{% endif %}
 <meta property="og:title" content="{{page.title}}">
+<meta property="og:description" content="{{page.excerpt|strip_html}}">
 <meta property="twitter:card" content="summary">
 <meta property="twitter:title" content="{{page.title}}">
 <meta property="twitter:description" content="{{page.excerpt|strip_html}}">
-<meta property="twitter:image" content="https://sophiebits.com{{page.og_image}}">
-{% endif %}
 </head>
 <body>
 {{content}}
