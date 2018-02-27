@@ -139,3 +139,7 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate,
 With this helper, we can simply call `dispatch_once_on_main_thread` instead of `dispatch_once` in `+ defaultStack`, and the initialization will always happen on the main thread.
 
 Arguably, setting up Core Data shouldn't require being on the main thread, but it does as of iOS 7. This helper is useful for this case and others where thread-unsafe initializers need to be run.
+
+---
+
+**Update (2017/02/27):** [Stephan Tolksdorf warns](https://github.com/facebook/react-native/issues/18096) that this technique is risky because it can deadlock if the main thread is already blocked on the thread running this code and notes that newer versions of libdispatch have slightly different implementations which may be more correct. 
