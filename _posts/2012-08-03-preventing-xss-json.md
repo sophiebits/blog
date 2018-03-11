@@ -52,6 +52,21 @@ def jsonify(obj):
 
 As long as you always remember to use the `jsonify` wrapper instead of the built-in JSON serialization, you should be safe from this particular attack.
 
+---
+
+**Update (2018/03/10):** Replacing `</` with `<\/` works for JSON but isn't necessarily correct when run over arbitrary JavaScript. Imagine the (nonsensical but valid) code `let x = foo < /bar/;`. When minified, you'll end up with `</` adjacent but since the `/` starts a regex, it isn't correct to add a backslash.
+
+Instead, [Erling Ellingsen](https://alf.nu/) and I concluded that escaping the "s" in script is a safe, general solution, since the same escaping (`\u0073`) is valid in all the places a letter can appear: strings, regexes, and JS identifiers. The following should work:
+
+{% highlight ruby %}
+def scriptify(code)
+  escaped = code
+    .gsub(/<\/s([cC][rR][iI][pP][tT])/, '</\\u0073\1')
+    .gsub(/<\/S([cC][rR][iI][pP][tT])/, '</\\u0053\1')
+  "<script>#{escaped}<\/script>"
+end
+{% endhighlight %}
+
 
 [jinja2]: http://jinja.pocoo.org/
 [xss]: https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)

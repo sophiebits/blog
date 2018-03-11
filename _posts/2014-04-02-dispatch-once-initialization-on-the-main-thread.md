@@ -142,4 +142,4 @@ Arguably, setting up Core Data shouldn't require being on the main thread, but i
 
 ---
 
-**Update (2017/02/27):** [Stephan Tolksdorf warns](https://github.com/facebook/react-native/issues/18096) that this technique is risky because it can deadlock if the main thread is already blocked on the thread running this code and notes that newer versions of libdispatch have slightly different implementations which may be more correct. 
+**Update (2018/02/27):** [Stephan Tolksdorf warns](https://github.com/facebook/react-native/issues/18096) that this technique is risky because it can deadlock if the main thread is already blocked on the thread running this code and notes that newer versions of libdispatch have slightly different implementations which may be more correct.
