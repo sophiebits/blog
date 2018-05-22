@@ -41,10 +41,13 @@ This doesn't typecheck because we're passing numberRecord.id (a number) to proce
 
 ```
 13:   processStringID(id);
-                      ^ number.
-                        This type is incompatible with the expected param type of
+                      ^ Cannot call `processStringID` with `id` bound to `id`
+                        because number [1] is incompatible with string [2].
+References:
+3: type NumberRecord = {id: number, name: string};
+                            ^ [1]
 16: function processStringID(id: string) {
-                                 ^ string
+                                 ^ [2]
 ```
 
 So I know that Flow thinks `id` should be a number, but I don't know why it thinks that. In this small file, I can quickly trace back to see where it came from. But Flow makes me do all the work here to figure this out. It doesn't tell me that it thinks `first(records)` is a StringRecord. It doesn't tell me that that type comes from records being an Array<StringRecord>.
