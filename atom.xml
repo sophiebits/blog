@@ -15,6 +15,7 @@ layout: null
     </author>
 
     {% for post in site.posts %}
+    {% unless post.hidden %}
         <entry>
             <title>{{ post.title }}</title>
             <link href="http://sophiebits.com{{ post.url }}"/>
@@ -22,6 +23,7 @@ layout: null
             <id>http://sophiebits.com{{ post.id }}</id>
             <content type="html">{{ post.content | xml_escape }}</content>
         </entry>
+    {% endunless %}
     {% endfor %}
 
 </feed>
