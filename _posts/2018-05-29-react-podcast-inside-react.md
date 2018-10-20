@@ -7,6 +7,8 @@ I recently had the opportunity to appear on the React Podcast and be interviewed
 
 [Listen here.](https://reactpodcast.simplecast.fm/11)
 
+<!-- more -->
+
 Transcript follows:
 
 ---
