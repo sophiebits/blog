@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why we do conference talk dry runs"
+title: "Why we host conference talk dry runs"
 ---
 
 I've been a part of organizing React Conf for the last few years. One thing we do differently from most conferences is that we do **dry runs with each speaker** in the couple weeks leading up to the conference.
