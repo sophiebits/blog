@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Initializing on the main thread using dispatch_once without race conditions
+title: Initializing on the main thread using dispatch_once
 ---
 
 We recently refactored the [Khan Academy](http://www.khanacademy.org/) iOS app to use Core Data instead of the haphazard system of JSON files which we were previously using. In this post I'll explain how to run initialization code that has to happen on the main thread without worrying about race conditions.

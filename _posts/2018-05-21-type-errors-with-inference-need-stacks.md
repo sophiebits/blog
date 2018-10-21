@@ -62,7 +62,7 @@ parameter `records` on foo.js:11 is type Array<StringRecord>, because
 `recordList` on foo.js:8 is type Array<StringRecord> with an explicit annotation.
 ```
 
-Then I can look and say, oh, foo.js:8 should have the annotation mention NumberRecord instead. Now, I know that this is a simple example and in reality types can come from multiple sources and many types aren't concisely serializable, so I understand if this exact format isn't possible. But this is the information I want.
+Then I can look and say, oh, foo.js:8 should use NumberRecord instead. Now, I know that this is a simple example and in reality types can come from multiple sources and many types aren't concisely serializable, so I understand if this exact format isn't possible. But this is the information I want.
 
 I think adding this "stack" is crucial to people understanding errors. We added "component stacks" to React to allow people to see the parent component and it's invaluable to debugging issues more quickly; offering the deepest component/type name (what we did before and essentially what Flow is doing) is only useful if you have no abstraction in your code.
 
@@ -79,9 +79,9 @@ If the stack of Flow's "thought process" for an error is too long, I can add an 
 Think of if JS errors never gave you a call stack, just the location of the code where the error is thrown. Then suppose you have
 
 ```
-16 function foo(x) {
-17   return x.foo;
-18 }
+16: function foo(x) {
+17:   return x.foo;
+18: }
 ```
 
 and you get "Cannot read property 'foo' from null" on line 17. That error is more useful than if there was no code location at all, but what I really need to know is which *callsite* of `foo` passed in null. It's common to have to go several levels up the call stack to find the function that is actually responsible for the bad data.
