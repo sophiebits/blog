@@ -1,21 +1,24 @@
 @import "_normalize";
 
-html, body {
-    height: 100%;
-}
-
 body {
     background: #cdf;
     color: #222;
     font: 16px/1.4 source-sans-pro, serif;
+    padding: 40px 5px;
 }
 
 .wrapper {
     background: #fff;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.125);
-    margin: 40px auto;
+    margin: 0 auto;
     padding: 40px;
-    width: 640px;
+    max-width: 640px;
+}
+
+@media (max-width: 719px) {
+  .wrapper {
+    padding: 40px 20px;
+  }
 }
 
 .container {
