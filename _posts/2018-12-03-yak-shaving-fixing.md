@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Yak Shaving and Fixing"
+title: "Yak shaving and fixing"
 ---
 
 I have a niche at work: I like to fix stuff.
