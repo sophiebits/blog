@@ -59,12 +59,21 @@ As long as you always remember to use the `jsonify` wrapper instead of the built
 Instead, [Erling Ellingsen](https://alf.nu/) and I concluded that escaping the "s" in script is a safe, general solution, since the same escaping (`\u0073`) is valid in all the places a letter can appear: strings, regexes, and JS identifiers. The following should work:
 
 {% highlight ruby %}
+# Ruby
 def scriptify(code)
-  escaped = code
-    .gsub(/<\/s([cC][rR][iI][pP][tT])/, '</\\u0073\1')
-    .gsub(/<\/S([cC][rR][iI][pP][tT])/, '</\\u0053\1')
-  "<script>#{escaped}<\/script>"
+  escaped = code.gsub(/(?<=<\/)s(?=cript)/i) { |m| "\\u%04x" % m.ord }
+  "<script>#{escaped}</script>"
 end
+{% endhighlight %}
+
+{% highlight python %}
+# Python
+def scriptify(code):
+    escaped = re.sub(
+        r'(?<=</)s(?=cript)',
+        lambda m: f'\\u{ord(m.group(0)):04x}',
+        code, flags=re.I)
+    return f'<script>{escaped}</script>'
 {% endhighlight %}
 
 
