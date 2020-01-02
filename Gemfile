@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'jekyll'
+gem 'jekyll', '~> 3.0'
 gem 'jekyll-less'
-gem 'liquid', '~> 3.0.0'
-gem 'pygments.rb', '~> 1.1.2'
+gem 'liquid', '~> 4.0'
+gem 'ffi', '<= 1.9.25'  # 1.11 makes sad https://github.com/ffi/ffi/issues/702
 gem 'therubyracer'
+gem 'kramdown'
+gem 'rouge', '~> 3.0'

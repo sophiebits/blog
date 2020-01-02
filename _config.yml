@@ -1,3 +1,4 @@
 exclude: ["vendor/bundle"]
-highlighter: pygments
+markdown: kramdown
+highlighter: rouge
 future: true
