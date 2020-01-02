@@ -10,15 +10,17 @@ Both of these are just means of working towards our real goal: finding ways to m
 
 When I say "application code", this time I'm mostly thinking of server-side (web backend) development, where you have a database that you perform many fetches from. Technically speaking, nothing here is database-specific, but the _idea_ of a database is the right mental model here, so it's the terminology I'll use.
 
-I'm also going to focus on the sort of application frameworks where you fetch individual pieces of stored data (maybe using an [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping) library). In particular, this post will tell you little about how to improve code that uses, say, complex SQL queries with joins.
+I'm going to focus on the sort of application frameworks where you fetch individual pieces of stored data (maybe using an [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping) library). In particular, this post will tell you little about how to improve code that uses, say, complex SQL queries with joins.
 
-These are techniques that I've seen work at scale – in codebases developed by thousands of engineers, containing many millions of lines of code, and used by billions of users. I'm confident they make sense on small teams too.
+These are techniques that I've seen work at scale – in codebases developed by thousands of engineers, containing many millions of lines of code, and used by billions of users.
+
+I'm confident they make sense on small teams too.
 
 ## Introduction
 
 For the code examples in this post, I'll give my database functions names like `fetchPosts()`. It could have just as easily been something like `Post.fetchAll()` or `DB.queryAll(Post)`. The exact naming and syntax here isn't what I'm focused on.
 
-As an example, let's say the app we're building has a blog component, and we'd like to render a summary of published posts, with the post title, author, view count, and a fun fact about that view count number. The list we're rendering will look like this:
+As an example, let's say the app we're building has a blog component, and we'd like to render a summary of published posts, with the post title, author, number of times it's been viewed, and a fun fact about that view count number. The list we're rendering will look like this:
 
 * **"What makes a sofa a sofa?" by Sophie A**<br>
   View count: 496 (_the third [perfect number](https://en.wikipedia.org/wiki/Perfect_number)!_)
@@ -63,7 +65,7 @@ However, this code likely doesn't run very fast. In particular, we talk to our d
 
 ## Batching
 
-One major improvement would be to make these requests in batch, where we ask our database to fetch multiple things at once. Imagining we have functions such as `fetchManyAuthors(posts)` which takes a list of posts and returns a list of authors corresponding 1:1 with the list of posts, we could rewrite our code as follows:
+One major improvement would be to make these requests in batch, where we ask our database to fetch multiple things at once. Imagining we have functions such as `fetchManyAuthors(posts)` which takes a list of posts and returns a list of authors corresponding 1:1 with the list of posts, we could rewrite our code to process the whole list of posts at once:
 
 {% highlight javascript %}
 async function buildPostsSummary() {
@@ -73,8 +75,9 @@ async function buildPostsSummary() {
 
   // We only want to fetch facts for non-zero view counts.
   // It gets more complicated than a simple .filter() because we need
-  // to track which view count came from which index. We need to
-  // ...turn [2, 496, 0, 17] into [2, 496, 17],
+  // to track which view count came from which index.
+  // For example, we need to:
+  // ...turn [496, 17, 0, 2] into [496, 17, 2],
   // ...pass that to fetchManyFunFacts(),
   // ...get back three fun facts [factA, factB, factC],
   // ...then space it into [factA, factB, undefined, factC] so that
@@ -114,9 +117,9 @@ Whew.
 
 The good news is this now talks to the database only 4 times total.
 
-The bad news is that the code is a small nightmare. The first few lines started out OK – but as soon as you run into anything more complicated, even the one-line conditional we had in our original function.
+The bad news is that the code is a small nightmare. The first few lines started out OK – but as soon as you run into anything more complicated, even the one-line conditional we had in our original function, the code turns into a disaster.
 
-**Switching from processing one item at a time to processing many at once makes code _dramatically_ more complex.** This is bad news both because it's annoying to write and because it's much easier to introduce bugs. (Do _you_ know if my code snippet has a bug in it? Me neither.)
+**Switching from processing one item at a time to processing many at once makes our code _dramatically_ more complex.** This is bad news both because it's annoying to write and because it's much easier to introduce bugs. (Do _you_ know if my code snippet has a bug in it? Me neither.)
 
 Note that we're also now coupled to the particular array-of-posts structure we've chosen. For example, what if we had multiple separate blogs, and we wanted to fetch this summary for each blog's respective posts? Unless we restructure this entire function, we'd end up fetching the data for each blog separately, rather than having it fully batched together.
 
@@ -126,7 +129,7 @@ So we need to find another approach.
 
 ## Parallelism
 
-Let's think back to our original example. Our biggest problem is that we were processing the posts array completely serially. With a small tweak, we can make it process each post in parallel, by initiating processing for every post then waiting for them all to finish.
+Let's think back to our original example. Our biggest problem is that we were processing the posts array completely serially. With a small tweak, we can make it process each post in parallel, by initiating processing for every post then waiting for them all to finish with a `Promise.all`.
 
 {% highlight javascript %}
 async function buildPostsSummary() {
@@ -185,7 +188,7 @@ async function buildPostSummary(post) {
 }
 {% endhighlight %}
 
-Note that we wait until the author has been fetched before we begin fetching the post's stats. We can parallelize these too. You might try to write this:
+Note that we wait until the author has been fetched before we begin fetching the post's stats. We can parallelize these too. You might try to fix it by parallelizing the author and stats fetches:
 
 {% highlight javascript %}
 async function buildPostSummary(post) {
@@ -204,9 +207,9 @@ async function buildPostSummary(post) {
 }
 {% endhighlight %}
 
-This is better but isn't optimal. If fetching the author takes longer than fetching the stats, we unnecessarily wait for the author before we fetch the fun fact.
+This is better but isn't optimal: if fetching the author takes longer than fetching the stats, we unnecessarily wait for the author before we fetch the fun fact.
 
-There are a few ways we can structure this for optimal parallelism. You only want to fetch the stats once, so maybe you'd try it like this:
+There are a few ways we can structure this for optimal parallelism. You only want to fetch the stats once, so maybe you'd try having one "thread" fetch the stats and fun fact, in parallel with the author fetch:
 
 {% highlight javascript %}
 async function buildPostSummary(post) {
@@ -238,7 +241,7 @@ For example, imagine that a change to our app now means that we _do_ need to fet
 
 How else can we structure this?
 
-Let's look back how our function works – this time, I'm going to elide the actual data fetching code so we can rethink it a little:
+Let's look back at what our function returns (eliding the actual data fetching code, which we'll soon rewrite):
 
 {% highlight javascript %}
 async function buildPostSummary(post) {
@@ -289,6 +292,8 @@ async function buildPostSummary(post) {
   return { title: post.title, authorName, viewCount, funFact };
 }
 {% endhighlight %}
+
+Now, we first specify how to fetch the three pieces of info we need; then, we initiate and wait for the trio together. This will runs with the same optimal parallelism structure, but it happens automatically for us; we didn't need to write it out by hand.
 
 I love this code: it is more lines of code than before, but the code is less "clever" – which is a good thing. (You could also write this in an object-oriented fashion with a class if you prefer.)
 
