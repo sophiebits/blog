@@ -2,3 +2,4 @@ exclude: ["vendor/bundle"]
 markdown: kramdown
 highlighter: rouge
 future: true
+plugins: ["jekyll-redirect-from"]

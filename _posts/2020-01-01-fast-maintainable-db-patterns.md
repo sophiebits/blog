@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Fast and maintainable patterns for fetching from a database"
+redirect_from: ["/2019/01/01/fast-maintainable-db-patterns.html"]
 ---
 
 In this post, I want to talk about how we can build better application frameworks and how we can structure code in our applications more clearly.
